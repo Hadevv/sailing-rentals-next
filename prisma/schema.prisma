@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  username      String
+  email         String         @unique
+  password      String
+  bio           String?
+  avatarUrl     String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  owner         BoatOwner?
+  renter        BoatRenter?
+  reviews       Review[]
+  notifications Notification[]
+  payments      Payment[]
+}
+
+model Boat {
+  id          Int       @id @default(autoincrement())
+  name        String
+  type        String
+  description String
+  imageUrl    String?
+  owner       BoatOwner @relation(fields: [ownerId], references: [id])
+  ownerId     Int
+  rentals     Rental[]
+  reviews     Review[]
+  bookings    Booking[]
+}
+
+model BoatOwner {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+  boats  Boat[]
+}
+
+model BoatRenter {
+  id       Int       @id @default(autoincrement())
+  user     User      @relation(fields: [userId], references: [id])
+  userId   Int       @unique
+  rentals  Rental[]
+  bookings Booking[]
+}
+
+model Rental {
+  id        Int        @id @default(autoincrement())
+  boat      Boat       @relation(fields: [boatId], references: [id])
+  boatId    Int
+  renter    BoatRenter @relation(fields: [renterId], references: [id])
+  renterId  Int
+  startDate DateTime
+  endDate   DateTime
+  payment   Payment[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  boat      Boat     @relation(fields: [boatId], references: [id])
+  boatId    Int
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  method    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  rental    Rental   @relation(fields: [rentalId], references: [id])
+  rentalId  Int
+}
+
+model Booking {
+  id        Int        @id @default(autoincrement())
+  boat      Boat       @relation(fields: [boatId], references: [id])
+  boatId    Int
+  renter    BoatRenter @relation(fields: [renterId], references: [id])
+  renterId  Int
+  startDate DateTime
+  endDate   DateTime
+  status    String
+  createdAt DateTime   @default(now())
+}
