@@ -1,32 +1,20 @@
 import React from "react";
 import prisma from "../lib/db";
-import { Boat } from "@prisma/client";
 
-async function getBoat(): Promise<Boat[]> {
-  "use server";
-
+async function getBoat() {
+  'use server'
   const boats = await prisma.boat.findMany({
     select: {
       id: true,
       name: true,
       type: true,
-      description: true,
+      description: false,
       imageUrl: true,
       ownerId: true,
-      owner: {
-        select: {
-          id: true,
-          user: {
-            select: {
-              id: true,
-              username: true,
-              email: true,
-            },
-          },
-        },
+      owner: true,
       },
     },
-  });
+  );
 
   return boats;
 }
@@ -37,20 +25,20 @@ export default async function Home() {
 
   return (
     <div>
-      <h1>Boats</h1>
       <ul>
         {boats.map((boat) => (
           <li key={boat.id}>
             <h2>{boat.name}</h2>
             <p>{boat.type}</p>
-            <p>{boat.description}</p>
-            <>{boat.imageUrl}</>
+            {/* <p>{boat.description}</p> */}
+            <p>{boat.imageUrl}</p>
             <p>{boat.ownerId}</p>
-            <p>{boat.owner.user.username}</p>
-            <p>{boat.owner.user.email}</p>
+            <p>{boat.owner?.username}</p>
+            <p>{boat.owner?.email}</p>
           </li>
         ))}
       </ul>
     </div>
   );
 }
+
