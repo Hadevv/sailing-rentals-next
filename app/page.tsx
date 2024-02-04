@@ -1,8 +1,18 @@
 import React from "react";
 import prisma from "../lib/db";
+import Image from "next/image";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import ulyc from "../public/img/ulyc.jpeg";
 
 async function getBoat() {
-  'use server'
+  "use server";
   const boats = await prisma.boat.findMany({
     select: {
       id: true,
@@ -12,9 +22,8 @@ async function getBoat() {
       imageUrl: true,
       ownerId: true,
       owner: true,
-      },
     },
-  );
+  });
 
   return boats;
 }
@@ -25,20 +34,27 @@ export default async function Home() {
 
   return (
     <div>
-      <ul>
+      <div className="flex justify-center gap-5">
         {boats.map((boat) => (
-          <li key={boat.id}>
-            <h2>{boat.name}</h2>
-            <p>{boat.type}</p>
-            {/* <p>{boat.description}</p> */}
-            <p>{boat.imageUrl}</p>
-            <p>{boat.ownerId}</p>
-            <p>{boat.owner?.username}</p>
-            <p>{boat.owner?.email}</p>
-          </li>
+          <Card className="w-64" key={boat.id}>
+            <CardHeader>
+              <CardTitle>{boat.name}</CardTitle>
+              <CardDescription>{boat.type}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Image
+                src={ulyc}
+                alt={boat.name}
+                width={300}
+                height={200}
+              />
+            </CardContent>
+            <CardFooter>
+                <CardDescription>{boat.owner.username}</CardDescription>
+            </CardFooter>
+          </Card>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
-
