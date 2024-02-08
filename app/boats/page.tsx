@@ -9,7 +9,8 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import ulyc from "../public/img/ulyc.jpeg";
+import ulyc from "../../public/img/ulyc.jpeg";
+import Link from "next/link";
 
 async function getBoat() {
   "use server";
@@ -33,28 +34,25 @@ export default async function Home() {
   console.log(boats);
 
   return (
-    <div>
+    <>
       <div className="flex justify-center gap-5">
         {boats.map((boat) => (
-          <Card className="w-64" key={boat.id}>
-            <CardHeader>
-              <CardTitle>{boat.name}</CardTitle>
-              <CardDescription>{boat.type}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Image
-                src={ulyc}
-                alt={boat.name}
-                width={300}
-                height={200}
-              />
-            </CardContent>
-            <CardFooter>
+          <Link href={`/boats/${boat.id}`} key={boat.id}>
+            <Card className="w-64">
+              <CardHeader>
+                <CardTitle>{boat.name}</CardTitle>
+                <CardDescription>{boat.type}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Image src={ulyc} alt={boat.name} width={300} height={200} />
+              </CardContent>
+              <CardFooter>
                 <CardDescription>{boat.owner.username}</CardDescription>
-            </CardFooter>
-          </Card>
+              </CardFooter>
+            </Card>
+          </Link>
         ))}
       </div>
-    </div>
+    </>
   );
 }
