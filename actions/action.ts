@@ -20,7 +20,7 @@ export async function updateBoat(formData: FormData) {
   const input = formData.get("input") as string;
   const inputId = formData.get("inputId") as string;
 
-  await prisma.todo.update({
+  await prisma.boat.update({
     where: {
       id: inputId,
     },
@@ -36,9 +36,9 @@ export async function deleteBoat(formData: FormData) {
 
   const inputId = formData.get("inputId") as string;
 
-  await prisma.todo.delete({
+  await prisma.boat.delete({
     where: {
-      id: inputId,
+      id: Id,
     },
   });
 
