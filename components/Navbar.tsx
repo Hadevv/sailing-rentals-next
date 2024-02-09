@@ -5,10 +5,6 @@ import Link from "next/link";
 import { ShipWheel } from "lucide-react";
 import { Button } from "./ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
-import { Bell } from 'lucide-react';
-import { UserCog } from 'lucide-react';
-
-
 
 export default function Navbar() {
   return (
@@ -23,10 +19,8 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-        <UserCog />
-        <Bell />
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src="#" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <Link href="/login">

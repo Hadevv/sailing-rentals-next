@@ -1,6 +1,9 @@
 import React from "react";
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import BoatCard from "@/components/BoatCard";
 const prisma = new PrismaClient();
 
 export default async function Page({ params }: { params: { id: number } }) {
@@ -10,20 +13,17 @@ export default async function Page({ params }: { params: { id: number } }) {
     where: {
       id: boatId,
     },
-    select: {
-      name: true,
-      type: true,
-      description: true,
-    },
   });
 
   return (
-    <div className="">
-      <h1>{boat?.name}</h1>
-      <p>{boat?.type}</p>
-      <p>{boat?.description}</p>
-      <Link href="/">Back</Link>
+    <div className="max-w-6xl mx-auto p-8 bg-white">
+      <Link href="/">
+        <Button>
+          <ArrowLeft size={20} />
+          Back
+        </Button>
+      </Link>
+      <BoatCard boat={boat} />
     </div>
   );
 }
-

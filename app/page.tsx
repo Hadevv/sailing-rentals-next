@@ -35,10 +35,10 @@ export default async function Home() {
 
   return (
     <>
-      <div className="flex justify-center gap-5">
+      <div className="flex justify-center gap-5 ">
         {boats.map((boat) => (
           <Link href={`/boats/${boat.id}`} key={boat.id}>
-            <Card className="w-64">
+            <Card className=" w-full md:w-100">
               <CardHeader>
                 <CardTitle>{boat.name}</CardTitle>
                 <CardDescription>{boat.type}</CardDescription>
