@@ -13,6 +13,11 @@ type Boat = {
   name: string;
   type: string;
   description: string;
+  imageUrl: string;
+  ownerId: number;
+  owner: {
+    username: string;
+  };
 };
 
 export default function BoatCard({ boat }: { boat: Boat }) {
