@@ -19,7 +19,7 @@ async function getBoat() {
       id: true,
       name: true,
       type: true,
-      description: false,
+      description: true,
       imageUrl: true,
       ownerId: true,
       owner: true,

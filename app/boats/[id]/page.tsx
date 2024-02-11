@@ -4,9 +4,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BoatCard from "@/components/BoatCard";
-
-
 const prisma = new PrismaClient();
+
 
 export default async function Page({ params }: { params: { id: number } }) {
   const { id } = params;
@@ -15,6 +14,7 @@ export default async function Page({ params }: { params: { id: number } }) {
     where: {
       id: boatId,
     },
+    
   });
 
   return (

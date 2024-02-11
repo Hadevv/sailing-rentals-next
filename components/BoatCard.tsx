@@ -9,18 +9,7 @@ import {
 import Image from "next/image";
 import catamaran from "../public/img/catamaran.jpg";
 
-type Boat = {
-  name: string;
-  type: string;
-  description: string;
-  imageUrl: string;
-  ownerId: number;
-  owner: {
-    username: string;
-  };
-};
-
-export default function BoatCard({ boat }: { boat: Boat }) {
+export default function BoatCard({ boat }: { boat: any }) {
   return (
     <div key="1" className="max-w-6xl mx-auto p-8 bg-white">
       <div className="grid grid-cols-3 gap-8">
