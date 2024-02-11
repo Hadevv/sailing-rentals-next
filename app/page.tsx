@@ -26,7 +26,9 @@ async function getBoat() {
     },
   });
 
-  return boats;
+  return boats
+
+  ;
 }
 
 export default async function Home() {

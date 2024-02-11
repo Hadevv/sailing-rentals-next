@@ -14,10 +14,11 @@ export default async function Page({ params }: { params: { id: number } }) {
     where: {
       id: boatId,
     },
-    
+
   });
 
   return (
+    
     <div className="max-w-6xl mx-auto p-8 bg-white">
       <Link href="/">
         <Button>
