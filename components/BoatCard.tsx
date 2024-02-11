@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import catamaran from "../public/img/catamaran.jpg";
 
+
 export default function BoatCard({ boat }: { boat: any }) {
   return (
     <div key="1" className="max-w-6xl mx-auto p-8 bg-white">

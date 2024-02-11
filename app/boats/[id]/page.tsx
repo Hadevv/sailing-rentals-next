@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import BoatCard from "@/components/BoatCard";
 const prisma = new PrismaClient();
 
-
-export default async function Page({ params }: { params: { id: number } }) {
+export default async function Page({ params }: { params: { id: number } } ) {
   const { id } = params;
   const boatId = Number(id);
   const boat = await prisma.boat.findUnique({
@@ -18,7 +17,7 @@ export default async function Page({ params }: { params: { id: number } }) {
   });
 
   return (
-    
+
     <div className="max-w-6xl mx-auto p-8 bg-white">
       <Link href="/">
         <Button>
