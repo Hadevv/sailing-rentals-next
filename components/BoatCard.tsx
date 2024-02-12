@@ -9,8 +9,23 @@ import {
 import Image from "next/image";
 import catamaran from "../public/img/catamaran.jpg";
 
+import { Boat } from "@prisma/client";
 
-export default function BoatCard({ boat }: { boat: any }) {
+interface BoatCardProps {
+  boat : Boat
+  }
+
+export default function BoatCard({ 
+  boat: {
+    id,
+    name,
+    type,
+    description,
+    imageUrl,
+    ownerId,
+} 
+}: BoatCardProps) {
+
   return (
     <div key="1" className="max-w-6xl mx-auto p-8 bg-white">
       <div className="grid grid-cols-3 gap-8">
@@ -40,7 +55,7 @@ export default function BoatCard({ boat }: { boat: any }) {
             </div>
           </div>
           <h2 className="mt-4 text-3xl font-bold">
-            {boat.name} - {boat.type}
+            {name} - {type}
           </h2>
           <p className="text-lg">
             Menorquín 100 para alquilar en costa catalana.
