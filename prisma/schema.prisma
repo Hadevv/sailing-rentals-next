@@ -3,15 +3,21 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+  
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
   username      String
-  email         String         @unique
   password      String
   bio           String?
   avatarUrl     String?
@@ -32,7 +38,7 @@ model Boat {
   description String
   imageUrl    String?
   owner       User      @relation(fields: [ownerId], references: [id])
-  ownerId     Int
+  ownerId     String
   rentals     Rental[]
   reviews     Review[]
   bookings    Booking[]
@@ -43,7 +49,7 @@ model Rental {
   boat      Boat      @relation(fields: [boatId], references: [id])
   boatId    Int
   renter    User      @relation(fields: [renterId], references: [id])
-  renterId  Int
+  renterId  String
   startDate DateTime
   endDate   DateTime
   payment   Payment[]
@@ -55,7 +61,7 @@ model Review {
   comment   String?
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    String
   boat      Boat     @relation(fields: [boatId], references: [id])
   boatId    Int
 }
@@ -65,7 +71,7 @@ model Notification {
   content   String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    String
 }
 
 model Payment {
@@ -74,7 +80,7 @@ model Payment {
   method    String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    String
   rental    Rental   @relation(fields: [rentalId], references: [id])
   rentalId  Int
 }
@@ -84,9 +90,43 @@ model Booking {
   boat      Boat     @relation(fields: [boatId], references: [id])
   boatId    Int
   renter    User     @relation(fields: [renterId], references: [id])
-  renterId  Int
+  renterId  String
   startDate DateTime
   endDate   DateTime
   status    String
   createdAt DateTime @default(now())
 }
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
