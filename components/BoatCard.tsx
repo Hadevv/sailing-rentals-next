@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import catamaran from "../public/img/catamaran.jpg";
 
+// typescript interface exemple
 import { Boat } from "@prisma/client";
 
 interface BoatCardProps {
