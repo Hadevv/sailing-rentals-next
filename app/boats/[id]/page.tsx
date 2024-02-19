@@ -16,16 +16,5 @@ export default async function Page({ params }: { params: { id: number } } ) {
 
   });
 
-  return (
-
-    <div className="max-w-6xl mx-auto p-8 bg-white">
-      <Link href="/">
-        <Button>
-          <ArrowLeft size={20} />
-          Back
-        </Button>
-      </Link>
-      <BoatCard boat={boat} />
-    </div>
-  );
+  <BoatCard boat={boat || { id: 0, name: "", type: "", description: "", imageUrl: null, ownerId: "" }} />
 }
